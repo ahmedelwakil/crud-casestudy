@@ -1,0 +1,44 @@
+version: '3'
+volumes:
+  db-data:
+  cache-data:
+    driver: local
+
+services:
+  crud-api:
+    build: .
+    restart: always
+    container_name: crud-api
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8097:80
+    depends_on:
+      - crud-mysql
+      - crud-redis
+
+  crud-mysql:
+    image: mysql:8.0.29
+    restart: always
+    container_name: crud-mysql
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - 8098:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_HOST=crud-mysql
+      - MYSQL_PORT=8098
+      - MYSQL_DATABASE=crud
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=password
+
+  crud-redis:
+    image: redis:6.2-alpine
+    restart: always
+    container_name: crud-redis
+    volumes:
+      - cache-data:/data
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass password
