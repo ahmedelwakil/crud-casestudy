@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Common;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\ControllerInterface;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends BaseController implements ControllerInterface
 {
@@ -36,7 +37,15 @@ class CustomerController extends BaseController implements ControllerInterface
      */
     function getStoreValidationRules()
     {
-        return [];
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('customers', 'email')],
+            'phone' => ['sometimes', 'string', 'max:255'],
+            'address' => ['sometimes', 'string', 'max:255'],
+            'city' => ['sometimes', 'string', 'max:255'],
+            'state' => ['sometimes', 'string', 'max:255'],
+            'zip' => ['sometimes', 'string', 'max:255'],
+        ];
     }
 
     /**
@@ -53,7 +62,16 @@ class CustomerController extends BaseController implements ControllerInterface
      */
     function getUpdateValidationRules($id)
     {
-        return [];
+        return [
+            'name' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'email', 'max:255', Rule::unique('customers', 'email')->ignore($id, 'id')],
+            'phone' => ['sometimes', 'string', 'max:255'],
+            'address' => ['sometimes', 'string', 'max:255'],
+            'city' => ['sometimes', 'string', 'max:255'],
+            'state' => ['sometimes', 'string', 'max:255'],
+            'zip' => ['sometimes', 'string', 'max:255'],
+        ];
+
     }
 
     /**
