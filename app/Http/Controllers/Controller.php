@@ -20,12 +20,12 @@ class Controller extends BaseController
      */
     protected function response(?array $payload, int $statusCode, string $message = null)
     {
-        $response = [
-            "payload" => $payload,
-        ];
+        $response = [];
+        if (!empty($payload))
+            $response['payload'] = $payload;
 
         if ($message) {
-            $response["message"] = $message;
+            $response['message'] = $message;
         }
 
         return response()->json($response, $statusCode, [], JSON_INVALID_UTF8_IGNORE);
