@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Common\CustomerController;
+use App\Http\Controllers\Common\ServiceController;
 use App\Http\Controllers\Common\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,16 @@ Route::middleware('api')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('customers', CustomerController::class);
+
+        Route::name('customers.')->prefix('customers')->group(function () {
+            Route::get('{customer}/services', [ServiceController::class, 'list'])->name('list');
+            Route::post('{customer}/services', [ServiceController::class, 'attach'])->name('attach');
+        });
+
+        Route::name('services.')->prefix('services')->group(function () {
+            Route::get('', [ServiceController::class, 'index'])->name('index');
+            Route::put('{id}', [ServiceController::class, 'update'])->name('update');
+            Route::delete('{id}', [ServiceController::class, 'destroy'])->name('destroy');
+        });
     });
 });
