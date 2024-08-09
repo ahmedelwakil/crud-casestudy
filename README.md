@@ -24,11 +24,6 @@ The project will install 3 docker containers:
 
 To access any of the containers run ```docker exec -it {container-name} bash```. Please refer to the [docker-compose.yaml](./docker-compose.yaml) file for all container details especially container ports.
 
-To Run Unit Tests:
-- Access the Application Container ```docker exec -it foodics-api bash```
-- Run the tests command ```./vendor/bin/phpunit```
-- The testing environment uses on SQL Lite and runs in memory
-
 ## What is Implemented
 - Repository Architecture using Abstract Factory Design Pattern for rapid development of CRUD operations for entities. 
 - Docker Containers & Deployment (Application Container - Database Container)
