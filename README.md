@@ -15,7 +15,9 @@ Steps on how to deploy (Make sure docker-compose is installed on your machine):
 
 <b>**Note</b> The deployment seeds the database automatically. Please refer to the <b>[run.sh](./deploy-docker/run.sh)</b> bash file. It contains the commands that the docker container executes after creating the container. 
 
-<b>**Note</b> Authentication uses the [jwt-auth](https://github.com/tymondesigns/jwt-auth) composer package. 
+<b>**Note</b> Authentication uses the [jwt-auth](https://github.com/tymondesigns/jwt-auth) composer package.
+
+<b>**Note</b> You may need to run the command ```chmod 777 /var/www/html/storage/ -R``` initially for the storage directory. 
 
 The project will install 3 docker containers:
 - **MySQL Container**
